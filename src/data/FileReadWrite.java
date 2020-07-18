@@ -9,29 +9,29 @@ import java.io.IOException;
 import src.main.java.org.json.JSONArray;
 
 public abstract class FileReadWrite {
-	public static final JSONArray Load(String aPath) {
+	public static final JSONArray load(String aPath) {
 		StringBuilder data = new StringBuilder("");
 		try {
-			BufferedReader csvReader = new BufferedReader(new FileReader(aPath));
+			BufferedReader reader = new BufferedReader(new FileReader(aPath));
 			String row;
-			while ((row = csvReader.readLine()) != null) {
+			while ((row = reader.readLine()) != null) {
 				data.append(row);
 			}
-			csvReader.close();
+			reader.close();
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			data.append("[]");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return new JSONArray(data);
+		return new JSONArray(data.toString());
 	}
 
-	public static final void Save(String aPath, JSONArray aData) {
+	public static final void save(String aPath, JSONArray aData) {
 		try {
-			FileWriter csvWriter = new FileWriter(aPath);
-			csvWriter.append(aData.toString());
-			csvWriter.flush();
-			csvWriter.close();
+			FileWriter writer = new FileWriter(aPath);
+			writer.append(aData.toString());
+			writer.flush();
+			writer.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

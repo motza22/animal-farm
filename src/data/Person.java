@@ -15,11 +15,20 @@ public class Person extends SimpleType {
 		mWealth = 250000;
 	}
 
-	@Override
-	protected void loadJson(JSONObject aJsonObj) {}
+	public Person(JSONObject aJsonObj) {
+		super(aJsonObj);
+	}
 
 	@Override
-	protected void populateJson(JSONObject aJsonObj) {
+	protected void readJsonObject(JSONObject aJsonObj) {
+		mName = (String)aJsonObj.get("name");
+		mId = (int)aJsonObj.get("id");
+		mSalary = (int)aJsonObj.get("salary");
+		mWealth = (int)aJsonObj.get("wealth");
+	}
+
+	@Override
+	protected void writeJsonObject(JSONObject aJsonObj) {
 		aJsonObj.put("name", mName);
 		aJsonObj.put("id", mId);
 		aJsonObj.put("salary", mSalary);
