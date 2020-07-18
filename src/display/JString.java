@@ -14,12 +14,6 @@ public class JString extends Sprite {
 		mY = aY;
 	}
 
-	public JString(JString aJString) {
-		mString = aJString.mString;
-		mX = aJString.mX;
-		mY = aJString.mY;
-	}
-
 	public void setText(String aString) {
 		mString = aString;
 	}
