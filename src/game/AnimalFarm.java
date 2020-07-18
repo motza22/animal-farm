@@ -2,16 +2,20 @@ package game;
 
 import java.util.Vector;
 
+import data.FileReadWrite;
 import data.Person;
 import display.ConsoleManager;
+import src.main.java.org.json.JSONArray;
 
 public class AnimalFarm {
+	private static final String sSavePath = "C:/Users/Zach/java_workspace/Animal Farm/save/people.txt";
 	private static ConsoleManager sConsoleManager = new ConsoleManager(100, 300, 400);
 	private Vector<Person> mPeople = new Vector<Person>();
 
 	public AnimalFarm() {
 		mPeople.addElement(new Person());
 		sConsoleManager.print("Person Created: " + mPeople.elementAt(0).getJsonString());
+		save();
 	}
 
 	public void play() {
@@ -26,6 +30,14 @@ public class AnimalFarm {
 				}
 			}
 		}
+	}
+
+	private void save() {
+		JSONArray jsonArray = new JSONArray();
+		for(int i = 0; i < mPeople.size(); i++) {
+			jsonArray.put(mPeople.elementAt(i).getJsonObject());
+		}
+		FileReadWrite.Save(sSavePath, jsonArray);
 	}
 
 	public static void main(String [] args) {

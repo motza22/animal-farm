@@ -2,7 +2,7 @@ package data;
 
 import src.main.java.org.json.JSONObject;
 
-public class Person extends NvWrite {
+public class Person extends SimpleType {
 	String mName;
 	int mId;
 	int mSalary;
@@ -14,6 +14,9 @@ public class Person extends NvWrite {
 		mSalary = 90000;
 		mWealth = 250000;
 	}
+
+	@Override
+	protected void loadJson(JSONObject aJsonObj) {}
 
 	@Override
 	protected void populateJson(JSONObject aJsonObj) {
