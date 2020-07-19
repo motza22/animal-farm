@@ -6,18 +6,14 @@ import src.main.java.org.json.JSONArray;
 import src.main.java.org.json.JSONObject;
 
 public class Population extends SimpleContainer {
-	private static Population sPopulation = null;
 	private Vector<Person> mPeople = new Vector<Person>();
 
-	public static Population getInstance() {
-		if(sPopulation == null) {
-			sPopulation = new Population();
-		}
-		return sPopulation;
+	public Population(final String aSavePath) {
+		super(aSavePath);
 	}
 
-	private Population() {
-		super("C:/Users/Zach/java_workspace/Animal Farm/data/save/people.txt");
+	public void addPerson(Person aPerson) {
+		mPeople.addElement(aPerson);
 	}
 
 	public Person personAt(int aIdx) {
@@ -30,19 +26,6 @@ public class Population extends SimpleContainer {
 
 	public int size() {
 		return mPeople.size();
-	}
-
-	public void tryLoad() {
-		load();
-		if(mPeople.isEmpty()) {
-			createNew();
-		}
-	}
-
-	private void createNew() {
-		mPeople.addElement(new Person("Bob Allen Ford", 90000, 125000, 250000));
-		mPeople.addElement(new Person("Timothy Jones", 60000, 61000, 5000));
-		save();
 	}
 
 	@Override

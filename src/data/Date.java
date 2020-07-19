@@ -4,23 +4,12 @@ import src.main.java.org.json.JSONArray;
 import src.main.java.org.json.JSONObject;
 
 public class Date extends SimpleContainer {
-	private static Date sDate = null;
-	int mDay;
-	int mMonthish;
-	int mYear;
+	int mDay = 1;
+	int mMonthish = 1;
+	int mYear = 1000;
 
-	public static Date getInstance() {
-		if(sDate == null) {
-			sDate = new Date();
-		}
-		return sDate;
-	}
-
-	private Date() {
-		super("C:/Users/Zach/java_workspace/Animal Farm/data/save/date.txt");
-		mDay = 1;
-		mMonthish = 1;
-		mYear = 1000;
+	public Date(final String aSavePath) {
+		super(aSavePath);
 	}
 
 	public void increment() {

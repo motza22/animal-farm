@@ -5,19 +5,11 @@ import java.util.Vector;
 import src.main.java.org.json.JSONArray;
 
 public class Names extends SimpleEnum<String> {
-	private static Names sNames = null;
 	private Vector<String> mNames = new Vector<String>();
 
-	public static Names getInstance() {
-		if(sNames == null) {
-			sNames = new Names();
-			sNames.load();
-		}
-		return sNames;
-	}
-
-	private Names() {
-		super("C:/Users/Zach/java_workspace/Animal Farm/data/res/names.txt");
+	public Names(final String aSavePath) {
+		super(aSavePath);
+		load();
 	}
 
 	@Override
