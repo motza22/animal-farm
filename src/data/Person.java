@@ -1,5 +1,6 @@
 package data;
 
+import game.Dice;
 import src.main.java.org.json.JSONObject;
 
 public class Person extends SimpleType {
@@ -8,15 +9,20 @@ public class Person extends SimpleType {
 	public int mExpenditure;
 	public double mWealth;
 
-	public Person(String aName, int aSalary, int aExpenditure, double aWealth) {
+	public Person(String aName) {
 		mName = aName;
-		mSalary = aSalary;
-		mExpenditure = aExpenditure;
-		mWealth = aWealth;
+		mSalary = Dice.roll(10, 20);
+		mExpenditure = Dice.roll(20, 30);
+		mWealth = Dice.roll(100);
 	}
 
 	public Person(JSONObject aJsonObj) {
 		super(aJsonObj);
+	}
+
+	@Override
+	public String getString() {
+		return new String(mName + " | $" + mSalary + " | $" + mExpenditure + " | $" + mWealth);
 	}
 
 	@Override

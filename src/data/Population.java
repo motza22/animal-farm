@@ -29,6 +29,11 @@ public class Population extends SimpleContainer {
 	}
 
 	@Override
+	public String getString() {
+		return new String("Population count: " + mPeople.size());
+	}
+
+	@Override
 	protected void readJsonArray(JSONArray aJsonArr) {
 		for(int i = 0; i < aJsonArr.length(); i++) {
 			Person person = new Person((JSONObject)aJsonArr.get(i));

@@ -9,12 +9,6 @@ public abstract class SimpleContainer {
 		mSavePath = aSavePath;
 	}
 
-	public String getJsonString() {
-		JSONArray arr = new JSONArray();
-		writeJsonArray(arr);
-		return arr.toString();
-	}
-
 	public void load() {
 		JSONArray jsonArray = FileReadWrite.load(mSavePath);
 		readJsonArray(jsonArray);
@@ -26,6 +20,7 @@ public abstract class SimpleContainer {
 		FileReadWrite.save(mSavePath, jsonArray);
 	}
 
+	public abstract String getString();
 	protected abstract void readJsonArray(JSONArray aJsonArr);
 	protected abstract void writeJsonArray(JSONArray aJsonArr);
 }

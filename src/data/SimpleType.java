@@ -15,12 +15,7 @@ public abstract class SimpleType {
 		return obj;
 	}
 
-	public String getJsonString() {
-		JSONObject obj = new JSONObject();
-		writeJsonObject(obj);
-		return obj.toString();
-	}
-
+	public abstract String getString();
 	protected abstract void readJsonObject(JSONObject aJsonObj);
 	protected abstract void writeJsonObject(JSONObject aJsonObj);
 }

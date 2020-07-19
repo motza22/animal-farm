@@ -25,6 +25,21 @@ public class Date extends SimpleContainer {
 	}
 
 	@Override
+	public String getString() {
+		if(mMonthish == 1) {
+			return new String( mYear + "-Mudstorm-" + mDay);
+		} else if(mMonthish == 2) {
+			return new String( mYear + "-Hellish-" + mDay);
+		} else if(mMonthish == 3) {
+			return new String( mYear + "-Depressive-" + mDay);
+		} else if(mMonthish == 4) {
+			return new String( mYear + "-Cold-" + mDay);
+		} else {
+			return new String( mYear + "-Mudstorm-" + mDay);
+		}
+	}
+
+	@Override
 	protected void readJsonArray(JSONArray aJsonArr) {
 		if(aJsonArr.length() > 0) {
 			JSONObject obj = (JSONObject)aJsonArr.get(0);
