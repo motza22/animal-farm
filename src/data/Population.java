@@ -5,9 +5,8 @@ import java.util.Vector;
 import src.main.java.org.json.JSONArray;
 import src.main.java.org.json.JSONObject;
 
-public class Population {
+public class Population extends SimpleContainer {
 	private static Population sPopulation = null;
-	private static final String sSavePath = "C:/Users/Zach/java_workspace/Animal Farm/save/people.txt";
 	private Vector<Person> mPeople = new Vector<Person>();
 
 	public static Population getInstance() {
@@ -17,22 +16,27 @@ public class Population {
 		return sPopulation;
 	}
 
-	private Population() {}
+	private Population() {
+		super("C:/Users/Zach/java_workspace/Animal Farm/save/people.txt");
+	}
 
-	public Vector<Person> tryLoad() {
+	public Person personAt(int aIdx) {
+		return mPeople.elementAt(aIdx);
+	}
+
+	public void remove(Person aPerson) {
+		mPeople.remove(aPerson);
+	}
+
+	public int size() {
+		return mPeople.size();
+	}
+
+	public void tryLoad() {
 		load();
 		if(mPeople.isEmpty()) {
 			createNew();
 		}
-		return mPeople;
-	}
-
-	public void save() {
-		JSONArray jsonArray = new JSONArray();
-		for(int i = 0; i < mPeople.size(); i++) {
-			jsonArray.put(mPeople.elementAt(i).getJsonObject());
-		}
-		FileReadWrite.save(sSavePath, jsonArray);
 	}
 
 	private void createNew() {
@@ -41,11 +45,18 @@ public class Population {
 		save();
 	}
 
-	private void load() {
-		JSONArray jsonArray = FileReadWrite.load(sSavePath);
-		for(int i = 0; i < jsonArray.length(); i++) {
-			Person person = new Person((JSONObject)jsonArray.get(i));
+	@Override
+	protected void readJsonArray(JSONArray aJsonArr) {
+		for(int i = 0; i < aJsonArr.length(); i++) {
+			Person person = new Person((JSONObject)aJsonArr.get(i));
 			mPeople.add(person);
+		}
+	}
+
+	@Override
+	protected void writeJsonArray(JSONArray aJsonArr) {
+		for(int i = 0; i < mPeople.size(); i++) {
+			aJsonArr.put(mPeople.elementAt(i).getJsonObject());
 		}
 	}
 }
