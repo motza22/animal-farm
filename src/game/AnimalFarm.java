@@ -2,61 +2,46 @@ package game;
 
 import java.util.Vector;
 
-import data.FileReadWrite;
+import data.Date;
 import data.Person;
+import data.Population;
 import display.ConsoleManager;
-import src.main.java.org.json.JSONArray;
-import src.main.java.org.json.JSONObject;
 
 public class AnimalFarm {
-	private static final String sSavePath = "C:/Users/Zach/java_workspace/Animal Farm/save/people.txt";
 	private static ConsoleManager sConsoleManager = new ConsoleManager(100, 300, 400);
-	private Vector<Person> mPeople = new Vector<Person>();
+	private Vector<Person> mPeople;
+	private Date mDate;
 
 	public AnimalFarm() {
+		mDate = new Date();
+		mPeople = Population.getInstance().tryLoad();
+		sConsoleManager.print("Found " + mPeople.size() + " People.");
 	}
 
 	public void play() {
-		load();
-
-		if(mPeople.isEmpty()) {
-			createNew();
-		}
-
 		while(mPeople.size() > 0) {
-			for(int i = 0; i < mPeople.size(); i++ ) {
-				sConsoleManager.print("Person Killed: " + mPeople.elementAt(0).getJsonString());
-				mPeople.removeElementAt(0);
-				try {
-					Thread.sleep(100);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
+			sConsoleManager.print("New Day: " + mDate.getJsonString());
+			int count = 0;
+			for(int i = mPeople.size() - 1; i >= 0; i-- ) {
+				Person person = mPeople.elementAt(i);
+				sConsoleManager.print("Person " + ++count + ": " + person.getJsonString());
+				int wealthOffset = person.mSalary - person.mExpenditure;
+				// TODO: DO NOT DESTROY WEALTH!
+				person.mWealth += wealthOffset;
+				if(person.mWealth < 0) {
+					mPeople.remove(person);
+					sConsoleManager.print("Died.");
 				}
 			}
+			mDate.increment();
+			Population.getInstance().save();
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
-	}
-
-	private void createNew() {
-		mPeople.addElement(new Person());
-		sConsoleManager.print("Person Created: " + mPeople.elementAt(0).getJsonString());
-		save();
-	}
-
-	private void load() {
-		JSONArray jsonArray = FileReadWrite.load(sSavePath);
-		for(int i = 0; i < jsonArray.length(); i++) {
-			Person person = new Person((JSONObject)jsonArray.get(i));
-			sConsoleManager.print("Person Found: " + person.getJsonString());
-			mPeople.add(person);
-		}
-	}
-
-	private void save() {
-		JSONArray jsonArray = new JSONArray();
-		for(int i = 0; i < mPeople.size(); i++) {
-			jsonArray.put(mPeople.elementAt(i).getJsonObject());
-		}
-		FileReadWrite.save(sSavePath, jsonArray);
+		sConsoleManager.print("Everyone is dead.");
 	}
 
 	public static void main(String [] args) {

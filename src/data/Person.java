@@ -4,15 +4,15 @@ import src.main.java.org.json.JSONObject;
 
 public class Person extends SimpleType {
 	String mName;
-	int mId;
-	int mSalary;
-	double mWealth;
+	public int mSalary;
+	public int mExpenditure;
+	public double mWealth;
 
-	public Person() {
-		mName = "Bob Allen Ford";
-		mId = 1234;
-		mSalary = 90000;
-		mWealth = 250000;
+	public Person(String aName, int aSalary, int aExpenditure, double aWealth) {
+		mName = aName;
+		mSalary = aSalary;
+		mExpenditure = aExpenditure;
+		mWealth = aWealth;
 	}
 
 	public Person(JSONObject aJsonObj) {
@@ -22,16 +22,17 @@ public class Person extends SimpleType {
 	@Override
 	protected void readJsonObject(JSONObject aJsonObj) {
 		mName = (String)aJsonObj.get("name");
-		mId = (int)aJsonObj.get("id");
 		mSalary = (int)aJsonObj.get("salary");
+		mExpenditure = (int)aJsonObj.get("expenditure");
 		mWealth = (int)aJsonObj.get("wealth");
 	}
 
 	@Override
 	protected void writeJsonObject(JSONObject aJsonObj) {
 		aJsonObj.put("name", mName);
-		aJsonObj.put("id", mId);
 		aJsonObj.put("salary", mSalary);
+		aJsonObj.put("expenditure", mExpenditure);
 		aJsonObj.put("wealth", mWealth);
 	}
 }
+
