@@ -1,39 +1,52 @@
 package game;
 
+import data.Company;
 import data.Date;
 import data.Names;
+import data.Nasdaq;
 import data.Person;
 import data.Population;
 import display.ConsoleManager;
 
 public class AnimalFarm {
+	private static AnimalFarm sAnimalFarm = null;
 	private static ConsoleManager sConsoleManager = new ConsoleManager(100, 300, 400);
 	private Date mDate = new Date("C:/Users/Zach/java_workspace/Animal Farm/data/save/date.txt");
 	private Population mPopulation = new Population("C:/Users/Zach/java_workspace/Animal Farm/data/save/people.txt");
+	private Nasdaq mNasdaq = new Nasdaq("C:/Users/Zach/java_workspace/Animal Farm/data/save/nasdaq.txt");
 
-	public AnimalFarm() {
+	public static AnimalFarm getInstance() {
+		if(sAnimalFarm == null) {
+			sAnimalFarm = new AnimalFarm();
+		}
+		return sAnimalFarm;
+	}
+
+	private AnimalFarm() {
 		mDate.load();
 		mPopulation.load();
+		mNasdaq.load();
 		sConsoleManager.print("Found " + mPopulation.size() + " People.");
-		if(mPopulation.size() == 0) {
+		sConsoleManager.print("Found " + mNasdaq.size() + " Companies.");
+		if(mPopulation.size() == 0 || mNasdaq.size() == 0) {
 			reinitialize();
 		}
 	}
 
-	public void play() {
-		while(mPopulation.size() > 0) {
-			sConsoleManager.print(mDate.getString());
-			for(int i = mPopulation.size() - 1; i >= 0; i--) {
-				Person person = mPopulation.personAt(i);
-				sConsoleManager.print(person.getString());
-				int wealthOffset = person.mSalary - person.mExpenditure;
-				// TODO: DO NOT DESTROY WEALTH!
-				person.mWealth += wealthOffset;
-				if(person.mWealth < 0) {
-					mPopulation.remove(person);
-					sConsoleManager.print("Died.");
-				}
+	public Person find(int aSsid) {
+		for(int i = 0; i < mPopulation.size(); i++) {
+			if(mPopulation.get(i).getSsid() == aSsid ) {
+				return mPopulation.get(i);
 			}
+		}
+		return null;
+	}
+
+	public void play() {
+		while(mPopulation.size() > 0 && mNasdaq.size() > 0) {
+			sConsoleManager.print(new String(""));
+			sConsoleManager.print(mDate.getString());
+			takeTurn();
 			mDate.increment();
 			save();
 			try {
@@ -52,25 +65,43 @@ public class AnimalFarm {
 		Names companyNames = new Names("C:/Users/Zach/java_workspace/Animal Farm/data/res/company_names.txt");
 
 		for(int i = 0; i < names.size(); i++) {
-			mPopulation.addPerson(new Person(names.elementAt(i)));
+			mPopulation.add(new Person(names.elementAt(i)));
 		}
 		sConsoleManager.print("Created " + mPopulation.size() + " People.");
 
 		for(int i = 0; i < companyNames.size(); i++) {
-			sConsoleManager.print("Company " + companyNames.elementAt(i));
+			mNasdaq.add(new Company(companyNames.elementAt(i)));
 		}
-		// sConsoleManager.print("Created " + mPopulation.size() + " Companies.");
+		sConsoleManager.print("Created " + mNasdaq.size() + " Companies.");
+
+		save();
 	}
 
 	private void save() {
 		mDate.save();
 		mPopulation.save();
+		mNasdaq.save();
+	}
+
+	private void takeTurn() {
+		for(int i = mPopulation.size() - 1; i >= 0; i--) {
+			Person person = mPopulation.get(i);
+			sConsoleManager.print(person.getString());
+			mPopulation.remove(person);
+			sConsoleManager.print("Died.");
+		}
+
+		for(int i = mNasdaq.size() - 1; i >= 0; i--) {
+			Company company = mNasdaq.get(i);
+			sConsoleManager.print(company.getString());
+			mNasdaq.remove(company);
+			sConsoleManager.print("Bankrupt.");
+		}
 	}
 
 	public static void main(String [] args) {
 		sConsoleManager.print("Load.");
-		AnimalFarm animalFarm = new AnimalFarm();
-		animalFarm.play();
+		AnimalFarm.getInstance().play();
 		sConsoleManager.print("Exit.");
 	}
 }

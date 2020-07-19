@@ -2,7 +2,7 @@ package data;
 
 import src.main.java.org.json.JSONArray;
 
-public abstract class SimpleContainer {
+public abstract class SimpleContainer<T> {
 	private final String mSavePath;
 
 	public SimpleContainer(final String aSavePath) {
@@ -20,7 +20,10 @@ public abstract class SimpleContainer {
 		FileReadWrite.save(mSavePath, jsonArray);
 	}
 
-	public abstract String getString();
+	public abstract void add(T aObject);
+	public abstract T get(int aIdx);
+	public abstract void remove(T aObject);
+	public abstract int size();
 	protected abstract void readJsonArray(JSONArray aJsonArr);
 	protected abstract void writeJsonArray(JSONArray aJsonArr);
 }

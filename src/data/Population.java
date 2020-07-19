@@ -5,32 +5,31 @@ import java.util.Vector;
 import src.main.java.org.json.JSONArray;
 import src.main.java.org.json.JSONObject;
 
-public class Population extends SimpleContainer {
+public class Population extends SimpleContainer<Person> {
 	private Vector<Person> mPeople = new Vector<Person>();
 
 	public Population(final String aSavePath) {
 		super(aSavePath);
 	}
 
-	public void addPerson(Person aPerson) {
+	@Override
+	public void add(Person aPerson) {
 		mPeople.addElement(aPerson);
 	}
 
-	public Person personAt(int aIdx) {
+	@Override
+	public Person get(int aIdx) {
 		return mPeople.elementAt(aIdx);
 	}
 
+	@Override
 	public void remove(Person aPerson) {
 		mPeople.remove(aPerson);
 	}
 
+	@Override
 	public int size() {
 		return mPeople.size();
-	}
-
-	@Override
-	public String getString() {
-		return new String("Population count: " + mPeople.size());
 	}
 
 	@Override

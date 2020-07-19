@@ -3,10 +3,10 @@ package data;
 import src.main.java.org.json.JSONArray;
 import src.main.java.org.json.JSONObject;
 
-public class Date extends SimpleContainer {
-	int mDay = 1;
-	int mMonthish = 1;
-	int mYear = 1000;
+public class Date extends SimpleContainer<Date> {
+	private int mDay = 1;
+	private int mMonthish = 1;
+	private int mYear = 1000;
 
 	public Date(final String aSavePath) {
 		super(aSavePath);
@@ -24,7 +24,6 @@ public class Date extends SimpleContainer {
 		}
 	}
 
-	@Override
 	public String getString() {
 		if(mMonthish == 1) {
 			return new String( mYear + "-Mudstorm-" + mDay);
@@ -37,6 +36,24 @@ public class Date extends SimpleContainer {
 		} else {
 			return new String( mYear + "-Mudstorm-" + mDay);
 		}
+	}
+
+	@Override
+	public void add(Date aDate) {
+	}
+
+	@Override
+	public Date get(int aIdx) {
+		return this;
+	}
+
+	@Override
+	public void remove(Date aDate) {
+	}
+
+	@Override
+	public int size() {
+		return 1;
 	}
 
 	@Override
