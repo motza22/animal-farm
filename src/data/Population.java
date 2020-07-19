@@ -17,7 +17,7 @@ public class Population extends SimpleContainer {
 	}
 
 	private Population() {
-		super("C:/Users/Zach/java_workspace/Animal Farm/save/people.txt");
+		super("C:/Users/Zach/java_workspace/Animal Farm/data/save/people.txt");
 	}
 
 	public Person personAt(int aIdx) {

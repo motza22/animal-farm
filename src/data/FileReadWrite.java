@@ -20,6 +20,7 @@ public abstract class FileReadWrite {
 			reader.close();
 		} catch (FileNotFoundException e) {
 			data.append("[]");
+			System.out.println("Warning: File not found.");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
