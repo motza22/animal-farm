@@ -34,13 +34,13 @@ public class Person extends SimpleType {
 
 	@Override
 	protected void readJsonObject(JSONObject aJsonObj) {
-		mName = (String)aJsonObj.get("name");
-		mSsid = (int)aJsonObj.get("ssid");
-		mSalary = (int)aJsonObj.get("salary");
-		mExpenditure = (int)aJsonObj.get("expenditure");
+		mName = aJsonObj.getString("name");
+		mSsid = aJsonObj.getInt("ssid");
+		mSalary = aJsonObj.getInt("salary");
+		mExpenditure = aJsonObj.getInt("expenditure");
 		// TODO: Double?
-		mWealth = (int)aJsonObj.get("wealth");
-		mCompanyStock = (int)aJsonObj.get("stock");
+		mWealth = aJsonObj.getInt("wealth");
+		mCompanyStock = aJsonObj.getInt("stock");
 	}
 
 	@Override

@@ -60,7 +60,7 @@ public class Date extends SimpleContainer<Date> {
 	protected void readJsonArray(JSONArray aJsonArr) {
 		if(aJsonArr.length() > 0) {
 			JSONObject obj = (JSONObject)aJsonArr.get(0);
-			mDay = (int)obj.get("day");
+			mDay = obj.getInt("day");
 			if(((String)obj.get("monthish")).equals("Mudstorm")) {
 				mMonthish = 1;
 			} else if(((String)obj.get("monthish")).equals("Hellish")) {
@@ -72,7 +72,7 @@ public class Date extends SimpleContainer<Date> {
 			} else {
 				mMonthish = 1;
 			}
-			mYear = (int)obj.get("year");
+			mYear = obj.getInt("year");
 		}
 	}
 

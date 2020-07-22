@@ -39,8 +39,8 @@ public class Company extends SimpleType {
 	protected void readJsonObject(JSONObject aJsonObj) {
 		mName = (String)aJsonObj.get("name");
 		// TODO: Double?
-		mHeldWealth = (int)aJsonObj.get("held-wealth");
-		mEstTotalWealth = (int)aJsonObj.get("total-wealth");
+		mHeldWealth = aJsonObj.getInt("held-wealth");
+		mEstTotalWealth = aJsonObj.getInt("total-wealth");
 		JSONArray arr = (JSONArray)aJsonObj.get("employees");
 		for(int i = 0; i < arr.length(); i++) {
 			Person person = new Person((JSONObject)arr.get(i));

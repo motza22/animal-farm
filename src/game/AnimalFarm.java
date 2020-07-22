@@ -11,9 +11,9 @@ import display.ConsoleManager;
 public class AnimalFarm {
 	private static AnimalFarm sAnimalFarm = null;
 	private static ConsoleManager sConsoleManager = new ConsoleManager(100, 300, 400);
-	private Date mDate = new Date("C:/Users/Zach/java_workspace/Animal Farm/data/save/date.txt");
-	private Population mPopulation = new Population("C:/Users/Zach/java_workspace/Animal Farm/data/save/people.txt");
-	private Nasdaq mNasdaq = new Nasdaq("C:/Users/Zach/java_workspace/Animal Farm/data/save/nasdaq.txt");
+	private Date mDate = new Date("./data/save/date.txt");
+	private Population mPopulation = new Population("./data/save/people.txt");
+	private Nasdaq mNasdaq = new Nasdaq("./data/save/nasdaq.txt");
 
 	public static AnimalFarm getInstance() {
 		if(sAnimalFarm == null) {
@@ -61,8 +61,8 @@ public class AnimalFarm {
 	private void reinitialize() {
 		sConsoleManager.print("Reinitializing.");
 
-		Names names = new Names("C:/Users/Zach/java_workspace/Animal Farm/data/res/names.txt");
-		Names companyNames = new Names("C:/Users/Zach/java_workspace/Animal Farm/data/res/company_names.txt");
+		Names names = new Names("./data/res/names.txt");
+		Names companyNames = new Names("./data/res/company_names.txt");
 
 		for(int i = 0; i < names.size(); i++) {
 			mPopulation.add(new Person(names.elementAt(i)));
